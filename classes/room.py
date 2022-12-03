@@ -33,3 +33,8 @@ class Room:
             self.increase_money_in_till(self.entry_fee)
         else:
             return "Sorry, no entry, the room is full"
+
+    def guest_cheers_if_favourite_song_on_song_list(self, guest):
+        for song in self.song_list:
+            if guest.favourite_song == song.song_title:
+                return "Cheer"

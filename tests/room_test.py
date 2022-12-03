@@ -9,16 +9,17 @@ class TestRoom(unittest.TestCase):
 
     def setUp(self):
         self.room1 = Room("The Red Room", 5, 500, 3)
-        self.guest1 = Guest("Tim", 60)
-        self.guest2 = Guest("Hayley", 50)
-        self.guest3 = Guest("Luke", 70)
-        self.guest4 = Guest("Phil", 85)
-        self.guest5 = Guest("Mark", 40)
-        self.guest6 = Guest("Sam", 55)
-        self.song1 = Song("Dance", "ESG", "Funk", 4.5)
+        self.guest1 = Guest("Tim", 60, "Mr Your On Fire Mr")
+        self.guest2 = Guest("Hayley", 50, "Deceptacon")
+        self.guest3 = Guest("Luke", 70, "Hey Moon!")
+        self.guest4 = Guest("Phil", 85, "Deceptacon")
+        self.guest5 = Guest("Mark", 40, "Gyae Su")
+        self.guest6 = Guest("Sam", 55, "Hey Moon!")
+        self.song1 = Song("Hey Moon!", "Molly Nilsson", "Synth Pop", 5.5)
         self.song2 = Song("Gyae Su", "Pat Thomas", "Highlife", 4.0)
-        self.song3 = Song("Little Fluffy Clouds", "The Orb", "Electronic", 4.5)
-        self.song4 = Song("Love and Death", "Ebo Taylor", "Highlife", 7.0 )
+        self.song3 = Song("When I Grow Up", "Fever Ray", "Electro Pop", 4.5)
+        self.song4 = Song("Deceptacon", "Le Tigre", "Electro Pop", 3.0)
+        self.song5 = Song("Mr Your On Fire Mr", "Liars", "Noise Rock", 2.5)
 
 
 
@@ -66,3 +67,7 @@ class TestRoom(unittest.TestCase):
     def test_room_full_cant_admit_guest_to_room(self):
         self.room1.guest_list = [self.guest1, self.guest2, self.guest3, self.guest4, self.guest5]
         self.assertEqual("Sorry, no entry, the room is full", self.room1.admit_guest_to_room(self.guest6))
+
+    def test_guest_cheers_if_favourite_song_on_song_list(self):
+        self.room1.song_list = [self.song1, self.song3, self.song4]
+        self.assertEqual("Cheer", self.room1.guest_cheers_if_favourite_song_on_song_list(self.guest2))
