@@ -8,7 +8,7 @@ class TestRoom(unittest.TestCase):
 
 
     def setUp(self):
-        self.room1 = Room("The Red Room", 5, 500, 3)
+        self.room1 = Room("The Red Room", 5, 200, 3)
         self.guest1 = Guest("Tim", 60, "Mr Your On Fire Mr")
         self.guest2 = Guest("Hayley", 50, "Deceptacon")
         self.guest3 = Guest("Luke", 70, "Hey Moon!")
@@ -33,7 +33,7 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(0, self.room1.number_of_people_in_room())
 
     def test_room_has_till(self):
-        self.assertEqual(500, self.room1.till)
+        self.assertEqual(200, self.room1.till)
 
     def test_room_has_entry_fee(self):
         self.assertEqual(3, self.room1.entry_fee)
@@ -56,12 +56,15 @@ class TestRoom(unittest.TestCase):
 
     def test_increase_money_in_till(self):
         self.room1.increase_money_in_till(3)
-        self.assertEqual(503, self.room1.till)
+        self.assertEqual(203, self.room1.till)
 
-    def test_can_admit_guest_to_room(self):
+    def test_can_admit_guest_to_room_increases_occupancy(self):
         self.room1.admit_guest_to_room(self.guest1)
         self.assertEqual(1, self.room1.number_of_people_in_room())
-        self.assertEqual(503, self.room1.till)
+
+    def test_can_admit_guest_to_room_money_paid(self):
+        self.room1.admit_guest_to_room(self.guest1)
+        self.assertEqual(203, self.room1.till)
         self.assertEqual(57, self.guest1.wallet)
 
     def test_room_full_cant_admit_guest_to_room(self):
@@ -71,3 +74,7 @@ class TestRoom(unittest.TestCase):
     def test_guest_cheers_if_favourite_song_on_song_list(self):
         self.room1.song_list = [self.song1, self.song3, self.song4]
         self.assertEqual("Cheer", self.room1.guest_cheers_if_favourite_song_on_song_list(self.guest2))
+
+    def test_insufficient_money_cant_admit_guest_to_room(self):
+        guest_no_money = Guest("Rob", 0, "When I Grow Up")
+        self.assertEqual("Sorry, no entry, you don't have enough money", self.room1.admit_guest_to_room(guest_no_money))

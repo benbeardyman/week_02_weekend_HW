@@ -27,12 +27,15 @@ class Room:
         self.till += amount
 
     def admit_guest_to_room(self, guest):
-        if len(self.guest_list) < 5:
-            self.add_guest_to_room(guest)
-            guest.remove_money_from_wallet(self.entry_fee)
-            self.increase_money_in_till(self.entry_fee)
+        if guest.wallet >= self.entry_fee:
+            if len(self.guest_list) < 5:
+                self.add_guest_to_room(guest)
+                guest.remove_money_from_wallet(self.entry_fee)
+                self.increase_money_in_till(self.entry_fee)
+            else:
+                return "Sorry, no entry, the room is full"
         else:
-            return "Sorry, no entry, the room is full"
+            return "Sorry, no entry, you don't have enough money"
 
     def guest_cheers_if_favourite_song_on_song_list(self, guest):
         for song in self.song_list:
